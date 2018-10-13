@@ -24,7 +24,7 @@ module.exports.sendEmail = (recipients, subject, message) => {
     return new Promise((resolve, reject) => {
         transporter.sendMail({
             from: config.EMAIL_USERNAME,
-            to: recipients,
+            bcc: recipients,
             subject: subject,
             text: message
         }, (err, info) => {
