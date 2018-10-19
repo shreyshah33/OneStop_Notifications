@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
  * @param {String} message Message to send
  * @return {Promise}
  */
-module.exports.sendEmail = (recipients, subject, message) => {
+module.exports.sendEmail = async (recipients, subject, message) => {
     if(!recipients && !subject && !message){
         return Promise.reject({error: "Invalid parameters"})
     }
