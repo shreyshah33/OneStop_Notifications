@@ -1,9 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { createUser } = require('../controllers/createUser');
+const { createUser } = require('../controllers/auth');
 const router = express.Router();
 
-mongoose.connect('mongodb://localhost:27017/onestop');
 
 router.get('/', (req, res) => {
     res.send("Notification Home Page. This is cool");

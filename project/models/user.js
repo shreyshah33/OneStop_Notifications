@@ -23,14 +23,16 @@ var UserSchema = new mongoose.Schema({
 //hashing a password before saving it to the database
 
 
-UserSchema.pre('save', function () {
+UserSchema.pre('save', function (next) {
   var user = this;
-  bcrypt.hash(user.password, 12, async function (err, hash){
+  bcrypt.hash(user.password, 12, function (err, hash){
     if (err) {
       return err;
     }
-    user.password = await hash;
-   
+    user.password = hash;
+    console.log('This password:',this.password);
+    console.log('User password:', user.password);
+    next();
   })
 });
 
