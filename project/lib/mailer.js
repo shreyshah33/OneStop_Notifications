@@ -2,8 +2,7 @@ const nodemailer = require('nodemailer');
 const config = require('../../config')
 
 const transporter = nodemailer.createTransport({
-    host: config.EMAIL_HOST,
-    port: config.EMAIL_PORT,
+    service: 'gmail',
     auth: {
         user: config.EMAIL_USERNAME,
         pass: config.EMAIL_PASSWORD
@@ -15,24 +14,19 @@ const transporter = nodemailer.createTransport({
  * @param {[String]} recipients List of emails
  * @param {String} subject Subject field of message
  * @param {String} message Message to send
- * @return {Promise}
  */
 module.exports.sendEmail = async (recipients, subject, message) => {
-    if(!recipients && !subject && !message){
-        return Promise.reject({error: "Invalid parameters"})
-    }
-    return new Promise((resolve, reject) => {
-        transporter.sendMail({
-            from: config.EMAIL_USERNAME,
-            bcc: recipients,
-            subject: subject,
-            text: message
-        }, (err, info) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve(info);
-        })
-    })
+    //Setting emailing options
+    const mailOptions = {
+        from: `${config.EMAIL_USERNAME}`, 
+        to: `${recipients}`, 
+        subject: `${subject}`, 
+        text: `${message}`
+    };
+    
+    //sending the email
+    transporter.sendMail(mailOptions, function (err, info) {
+        if(err)
+        console.log(err.code); // displaying only the error code
+    });
 }
